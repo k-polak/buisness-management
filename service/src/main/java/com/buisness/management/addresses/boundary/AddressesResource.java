@@ -18,4 +18,10 @@ public class AddressesResource {
     public String getAddresses(){
         return addressesController.getFirstRow();
     }
+
+    @GET
+    @Path("create")
+    public void createAddress(){
+        addressesController.createAddress();
+    }
 }

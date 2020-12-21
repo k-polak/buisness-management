@@ -1,5 +1,8 @@
 package com.buisness.management.addresses.control;
 
+import com.buisness.management.DataManager;
+import com.buisness.management.model.Address;
+
 import javax.enterprise.context.Dependent;
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -10,6 +13,7 @@ import java.sql.Statement;
 
 @Dependent
 public class AddressesController {
+    DataManager dataManager = new DataManager();
 
     public String getFirstRow() {
         ResultSet rs = null;
@@ -26,5 +30,15 @@ public class AddressesController {
             System.out.println("So sad found error: " + e.getLocalizedMessage());
         }
         return  toReturn;
+    }
+
+    public void createAddress(){
+        Address address = Address.builder()
+                .street("krakowska")
+                .number(123)
+                .city("Warszawa")
+                .postalCode("22-332")
+                .build();
+        dataManager.getAddressDao().create(address);
     }
 }
