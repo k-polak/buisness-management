@@ -1,6 +1,7 @@
 package com.buisness.management.daos;
 
 import com.buisness.management.db.DatabaseAccess;
+import com.buisness.management.db.DbQueries;
 import com.buisness.management.model.Address;
 
 import java.sql.Connection;
@@ -16,8 +17,7 @@ public class AddressDao {
 
     public void create(Address address){
         try (Connection connection = databaseAccess.getConnection()) {
-            String sql = "insert into g21.address(street, number, city, postal_code) values(?, ?, ?, ?);";
-            PreparedStatement statement = connection.prepareStatement(sql);
+            PreparedStatement statement = connection.prepareStatement(DbQueries.INSERT_ADDRESS);
             fillCreateStatement(statement, address);
             statement.executeUpdate();
             statement.close();
@@ -25,7 +25,6 @@ public class AddressDao {
             e.printStackTrace();
         }
     }
-
 
     private PreparedStatement fillCreateStatement(PreparedStatement preparedStatement, Address address) throws SQLException {
         preparedStatement.setString(1, address.getStreet());
