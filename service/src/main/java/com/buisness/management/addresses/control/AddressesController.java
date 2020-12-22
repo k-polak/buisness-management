@@ -34,9 +34,9 @@ public class AddressesController {
 
     public void createAddress(){
         Address address = Address.builder()
-                .street("krakowska")
-                .number(123)
-                .city("Warszawa")
+                .street("Makowska")
+                .number(1232)
+                .city("Lódź")
                 .postalCode("22-332")
                 .build();
         dataManager.getAddressDao().create(address);
