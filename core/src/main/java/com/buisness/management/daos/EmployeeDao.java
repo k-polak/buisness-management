@@ -48,6 +48,21 @@ public class EmployeeDao {
         return employees;
     }
 
+    public Employee findById(Integer id){
+        try (Connection connection = databaseAccess.getConnection();
+             PreparedStatement statement = connection.prepareStatement(DbQueries.SELECT_EMPLOYEE_BY_ID)) {
+            statement.setInt(1, id);
+
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return mapRowToEmployee(resultSet);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     private PreparedStatement fillCreateStatement(PreparedStatement preparedStatement, Employee employee, Integer addressId) throws SQLException {
         preparedStatement.setString(1, employee.getFirstName());
         preparedStatement.setString(2, employee.getLastName());

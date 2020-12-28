@@ -9,4 +9,5 @@ public class DbQueries {
 
     public static final String INSERT_EMPLOYEE = "insert into g21.employees(first_name, last_name, address_id) values(?, ?, ?)";
     public static final String SELECT_EMPLOYEES = "select * from g21.employees;";
+    public static final String SELECT_EMPLOYEE_BY_ID = "select * from g21.employees where id = ?";
 }
