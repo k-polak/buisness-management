@@ -5,15 +5,18 @@
     <title>Title</title>
     <script>
         function httpGetAsync(theUrl) {
+            let body ='{"street":"JsonStreet","city":"JsonCity","number":"1234","postalCode":"22-111"}';
             var xmlHttp = new XMLHttpRequest();
             xmlHttp.onreadystatechange = function() {
                 if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
                     console.log(xmlHttp.responseText);
             }
-            xmlHttp.open("GET", theUrl, true); // true for asynchronous
-            xmlHttp.send(null);
+
+            xmlHttp.open("POST", theUrl, true); // true for asynchronous
+            xmlHttp.setRequestHeader("Content-Type", "application/json");
+            xmlHttp.send(body);
         }
-        httpGetAsync("http://127.0.0.1:8080/service-1.0-SNAPSHOT/addresses");
+        //httpGetAsync("http://127.0.0.1:8080/service-1.0-SNAPSHOT/addresses/create");
     </script>
 </head>
 <body>

@@ -1,44 +1,25 @@
 package com.buisness.management.addresses.control;
 
 import com.buisness.management.DataManager;
-import com.buisness.management.model.Address;
+import com.buisness.management.DtoMapper;
+import com.buisness.management.dtos.AddressDTO;
 
 import javax.enterprise.context.Dependent;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Dependent
 public class AddressesController {
     DataManager dataManager = new DataManager();
 
-    public String getFirstRow() {
-        ResultSet rs = null;
-        String toReturn = "empty to return";
-        try {
-            Context ctx = new InitialContext();
-            DataSource ds = (DataSource) ctx.lookup("java:/TestDS");
-            Connection conn = ds.getConnection();
-            Statement statement = conn.createStatement();
-            rs = statement.executeQuery("select * from address");
-            rs.next();
-            toReturn = rs.getString("street");
-        } catch (Exception e) {
-            System.out.println("So sad found error: " + e.getLocalizedMessage());
-        }
-        return  toReturn;
+    public List<AddressDTO> getAllAddresses() {
+        return dataManager.getAddressDao().findAll()
+                .stream()
+                .map(DtoMapper::mapToAddressDTO)
+                .collect(Collectors.toList());
     }
 
-    public void createAddress(){
-        Address address = Address.builder()
-                .street("Makowska")
-                .number(1232)
-                .city("Lódź")
-                .postalCode("22-332")
-                .build();
-        dataManager.getAddressDao().create(address);
+    public void createAddress(AddressDTO addressDTO){
+        dataManager.getAddressDao().create(DtoMapper.mapToAddress(addressDTO));
     }
 }

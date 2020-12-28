@@ -1,11 +1,17 @@
 package com.buisness.management.addresses.boundary;
 
 import com.buisness.management.addresses.control.AddressesController;
+import com.buisness.management.dtos.AddressDTO;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import java.util.List;
 
 @Path("/addresses")
 @RequestScoped
@@ -15,13 +21,15 @@ public class AddressesResource {
     AddressesController addressesController;
 
     @GET
-    public String getAddresses(){
-        return addressesController.getFirstRow();
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<AddressDTO> getAddresses(){
+        return addressesController.getAllAddresses();
     }
 
-    @GET
+    @POST
     @Path("create")
-    public void createAddress(){
-        addressesController.createAddress();
+    @Consumes({MediaType.APPLICATION_JSON})
+    public void createAddress(AddressDTO addressDTO){
+        addressesController.createAddress(addressDTO);
     }
 }

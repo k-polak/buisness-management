@@ -5,10 +5,9 @@ import lombok.Getter;
 
 @Builder
 @Getter
-public class Address {
+public class Employee {
     Integer id;
-    String street;
-    String city;
-    Integer number;
-    String postalCode;
+    String firstName;
+    String lastName;
+    Address address;
 }
