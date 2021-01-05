@@ -8,16 +8,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-@Builder(builderClassName = "CreateEmployeeBuilder", toBuilder = true)
+@Builder(builderClassName = "CreateClientBuilder", toBuilder = true)
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateEmployeeDTO {
+
+public class CreateClientDTO {
     String firstName;
     String lastName;
     Integer addressId;
 
     @JsonPOJOBuilder(withPrefix = "")
-    public static class CreateEmployeeBuilder {
+    public static class CreateClientBuilder {
     }
 }

@@ -2,8 +2,9 @@ package com.buisness.management.clients.control;
 
 import com.buisness.management.DataManager;
 import com.buisness.management.DtoMapper;
-import com.buisness.management.dtos.AddressDTO;
 import com.buisness.management.dtos.ClientDTO;
+import com.buisness.management.dtos.CreateClientDTO;
+import com.buisness.management.model.Client;
 
 import javax.enterprise.context.Dependent;
 import java.util.List;
@@ -20,7 +21,11 @@ public class ClientsController {
                 .collect(Collectors.toList());
     }
 
-    public void createClient(ClientDTO clientDTO){
-        dataManager.getClientDao().create(DtoMapper.mapToClient(clientDTO));
+    public void createClient(CreateClientDTO clientDTO){
+        Client client = Client.builder()
+                .firstName(clientDTO.getFirstName())
+                .lastName(clientDTO.getLastName())
+                .build();
+        dataManager.getClientDao().create(client, clientDTO.getAddressId());
     }
 }

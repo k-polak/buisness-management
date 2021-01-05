@@ -1,6 +1,5 @@
 package com.buisness.management;
 
-import com.buisness.management.daos.AddressDao;
 import com.buisness.management.dtos.AddressDTO;
 import com.buisness.management.dtos.ClientDTO;
 import com.buisness.management.dtos.EmployeeDTO;
@@ -52,14 +51,7 @@ public class DtoMapper {
                 .id(client.getId())
                 .firstName(client.getFirstName())
                 .lastName(client.getLastName())
-                .addressId(client.getAddress().getId())
-                .build();
-    }
-    public static Client mapToClient(ClientDTO clientDTO){
-        return Client.builder()
-                .firstName(clientDTO.getFirstName())
-                .lastName(clientDTO.getLastName())
-                .address(new DataManager().getAddressDao().findById(clientDTO.getAddressId()))
+                .address(mapToAddressDTO(client.getAddress()))
                 .build();
     }
 

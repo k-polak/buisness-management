@@ -16,7 +16,7 @@ public class ClientDTO {
     Integer id;
     String firstName;
     String lastName;
-    Integer addressId;
+    AddressDTO address;
 
     @JsonPOJOBuilder(withPrefix = "")
     public static class ClientBuilder {
