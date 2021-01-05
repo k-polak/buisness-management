@@ -28,18 +28,15 @@ public class OrderDao {
         this.databaseAccess = databaseAccess;
         this.dataManager = dataManager;
     }
-
-    public void create(Order order){
+    public void create(Integer clientId, Map<Integer, Integer> products){
         try (Connection connection = databaseAccess.getConnection();
              PreparedStatement statement = connection.prepareStatement(DbQueries.INSERT_ORDER)) {
 
-            fillCreateStatement(statement, order.getClient().getId());
+            fillCreateStatement(statement, clientId);
             statement.executeUpdate();
 
-            order.getProducts().forEach((product, quantity) -> createOrderProduct(
-                    connection,
-                    product.getId(),
-                    quantity));
+            products.forEach((productId, quantity) -> createOrderProduct(connection,productId, quantity ));
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -70,7 +67,7 @@ public class OrderDao {
         try(PreparedStatement statement = connection.prepareStatement(DbQueries.INSERT_ORDER_PRODUCT)) {
             statement.setInt(1, productId);
             statement.setInt(2, quantity);
-            statement.executeQuery();
+            statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }

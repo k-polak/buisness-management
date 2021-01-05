@@ -22,6 +22,6 @@ public class OrdersController {
     }
 
     public void createOrder(OrderDTO orderDTO){
-        dataManager.getOrderDao().create(DtoMapper.mapToOrder(orderDTO));
+        dataManager.getOrderDao().create(orderDTO.getClientId(), orderDTO.getProductAmountMap());
     }
 }

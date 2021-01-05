@@ -74,10 +74,10 @@ public class DtoMapper {
 
     public static Order mapToOrder(OrderDTO orderDTO) {
         return Order.builder()
-                .client(new DataManager().getClientDao().findById(orderDTO.getClient_id()))
+                .client(new DataManager().getClientDao().findById(orderDTO.getClientId()))
                 .date(orderDTO.getDate())
                 .products(orderDTO
-                        .getOrder_products()
+                        .getProductAmountMap()
                         .entrySet()
                         .stream()
                         .collect(Collectors.toMap(
@@ -93,8 +93,8 @@ public class DtoMapper {
                 ));
         return OrderDTO.builder()
                 .id(order.getId())
-                .client_id(order.getClient().getId())
-                .order_products(order_products)
+                .clientId(order.getClient().getId())
+                .productAmountMap(order_products)
                 .date(order.getDate())
                 .build();
     }
