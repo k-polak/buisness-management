@@ -2,7 +2,7 @@ package com.buisness.management.orders.control;
 
 import com.buisness.management.DataManager;
 import com.buisness.management.DtoMapper;
-import com.buisness.management.dtos.ClientDTO;
+import com.buisness.management.dtos.CreateOrderDTO;
 import com.buisness.management.dtos.OrderDTO;
 
 import javax.enterprise.context.Dependent;
@@ -21,7 +21,7 @@ public class OrdersController {
 
     }
 
-    public void createOrder(OrderDTO orderDTO){
+    public void createOrder(CreateOrderDTO orderDTO){
         dataManager.getOrderDao().create(orderDTO.getClientId(), orderDTO.getProductAmountMap());
     }
 }

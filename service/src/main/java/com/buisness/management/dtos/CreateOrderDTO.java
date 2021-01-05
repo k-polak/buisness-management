@@ -12,18 +12,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Map;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Builder(builderClassName = "OrderBuilder", toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-public class OrderDTO {
+public class CreateOrderDTO {
 
-    Integer id;
-    ClientDTO client;
-    List<OrderProductDTO> products;
+    Integer clientId;
+    Map<Integer, Integer> productAmountMap;   // key: product ID, value: amount
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @JsonSerialize(using = LocalDateSerializer.class)
     LocalDate date;

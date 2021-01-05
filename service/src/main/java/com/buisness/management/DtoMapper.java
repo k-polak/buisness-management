@@ -12,7 +12,6 @@ import com.buisness.management.model.Employee;
 import com.buisness.management.model.Order;
 import com.buisness.management.model.Product;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -72,29 +71,21 @@ public class DtoMapper {
                 .build();
     }
 
-    public static Order mapToOrder(OrderDTO orderDTO) {
-        return Order.builder()
-                .client(new DataManager().getClientDao().findById(orderDTO.getClientId()))
-                .date(orderDTO.getDate())
-                .products(orderDTO
-                        .getProductAmountMap()
-                        .entrySet()
-                        .stream()
-                        .collect(Collectors.toMap(
-                                entry -> new DataManager().getProductDao().findById(entry.getKey()),
-                                Map.Entry::getValue)))
-                .build();
-    }
-
     public static OrderDTO mapToOrderDTO(Order order){
-        Map<Integer, Integer> order_products = order.getProducts().entrySet().stream()
-                .collect(Collectors.toMap(
-                        entry -> entry.getKey().getId(), Map.Entry::getValue
-                ));
+        List<OrderProductDTO> orderProductDTOS = order.getProducts().entrySet()
+                .stream()
+                .map(entry -> {
+                    return OrderProductDTO.builder()
+                            .product(mapToProductDTO(entry.getKey()))
+                            .amount(entry.getValue())
+                            .build();
+                })
+                .collect(Collectors.toList());
+
         return OrderDTO.builder()
                 .id(order.getId())
-                .clientId(order.getClient().getId())
-                .productAmountMap(order_products)
+                .client(mapToClientDTO(order.getClient()))
+                .products(orderProductDTOS)
                 .date(order.getDate())
                 .build();
     }
