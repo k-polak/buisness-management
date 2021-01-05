@@ -8,7 +8,10 @@ import com.buisness.management.daos.OrderProductDao;
 import com.buisness.management.daos.ProductDao;
 import com.buisness.management.db.DatabaseAccess;
 import com.buisness.management.db.MySqlDatabaseAccess;
-import com.buisness.management.model.Order;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class DataManager {
     private  DatabaseAccess databaseAccess;
@@ -39,5 +42,18 @@ public class DataManager {
 
     public OrderProductDao getOrderProductDao(){
         return new OrderProductDao(databaseAccess);
+    }
+
+    public void loadTestData(){
+        try (Connection connection = databaseAccess.getConnection()) {
+            Statement statement = connection.createStatement();
+
+            //Files.readString(Paths.get());
+            getClass().getResource("/testData.sql");
+            statement.execute("");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

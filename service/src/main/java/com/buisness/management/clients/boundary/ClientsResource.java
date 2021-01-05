@@ -1,8 +1,8 @@
 package com.buisness.management.clients.boundary;
 
 import com.buisness.management.clients.control.ClientsController;
-import com.buisness.management.dtos.AddressDTO;
 import com.buisness.management.dtos.ClientDTO;
+import com.buisness.management.dtos.CreateClientDTO;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -24,9 +24,9 @@ public class ClientsResource {
     }
 
     @POST
-    @Path("create")
+    @Path("/create")
     @Consumes({MediaType.APPLICATION_JSON})
-    public void createClient(ClientDTO clientDTO){
-        clientsController.createClient(clientDTO);
+    public void createClient(CreateClientDTO createClientDTO){
+        clientsController.createClient(createClientDTO);
     }
 }
