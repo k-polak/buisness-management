@@ -17,12 +17,14 @@ public class DbQueries {
 
     public static final String INSERT_PRODUCT = "insert into g21.products(name, code, quantity) values(?, ?, ?)";
     public static final String SELECT_PRODUCTS = "select * from g21.products;";
+    public static final String SELECT_PRODUCT_BY_ID = "select * from g21.products where products.id = ?";
     public static final String SELECT_PRODUCTS_BY_IDS_IN = "select * from g21.products where products.id in";
 
-    public static final String INSERT_ORDER = "insert into g21.orders(client_id, date) values(?, ?); " +
-            "set @last_insert_id = LAST_INSERT_ID();";
+    public static final String INSERT_ORDER = "insert into g21.orders(client_id, date) values(?, ?); ";
+            //"set @last_insert_id = LAST_INSERT_ID();";
     public static final String INSERT_ORDER_PRODUCT = "insert into g21.order_product(order_id, product_id, quantity)" +
-            " values(@last_insert_id, ?, ?)";
+            //" values(@last_insert_id, ?, ?)";
+            " values((select id from g21.orders order by id desc limit 1), ?, ?)";
 
     public static final String SELECT_ORDERS = "select * from g21.orders;";
 

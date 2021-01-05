@@ -29,14 +29,17 @@ public class OrderDao {
         this.dataManager = dataManager;
     }
 
-    public void create(Integer clientId, Map<Integer, Integer> products){
+    public void create(Order order){
         try (Connection connection = databaseAccess.getConnection();
              PreparedStatement statement = connection.prepareStatement(DbQueries.INSERT_ORDER)) {
 
-            fillCreateStatement(statement, clientId);
+            fillCreateStatement(statement, order.getClient().getId());
             statement.executeUpdate();
 
-            products.forEach((productId, quantity) -> createOrderProduct(connection,productId, quantity ));
+            order.getProducts().forEach((product, quantity) -> createOrderProduct(
+                    connection,
+                    product.getId(),
+                    quantity));
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -13,7 +13,9 @@ import com.buisness.management.model.Employee;
 import com.buisness.management.model.Order;
 import com.buisness.management.model.Product;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class DtoMapper {
@@ -61,6 +63,14 @@ public class DtoMapper {
                 .build();
     }
 
+    public static Product mapToProduct(ProductDTO productDTO) {
+        return Product.builder()
+                .name(productDTO.getName())
+                .code(productDTO.getCode())
+                .quantity(productDTO.getQuantity())
+                .build();
+    }
+
     public static ProductDTO mapToProductDTO(Product product){
         return ProductDTO.builder()
                 .id(product.getId())
@@ -70,20 +80,29 @@ public class DtoMapper {
                 .build();
     }
 
+    public static Order mapToOrder(OrderDTO orderDTO) {
+        return Order.builder()
+                .client(new DataManager().getClientDao().findById(orderDTO.getClient_id()))
+                .date(orderDTO.getDate())
+                .products(orderDTO
+                        .getOrder_products()
+                        .entrySet()
+                        .stream()
+                        .collect(Collectors.toMap(
+                                entry -> new DataManager().getProductDao().findById(entry.getKey()),
+                                Map.Entry::getValue)))
+                .build();
+    }
+
     public static OrderDTO mapToOrderDTO(Order order){
-        List<OrderProductDTO> orderProductDTOS = order.getProducts().entrySet()
-                .stream()
-                .map(entry ->{
-                    return OrderProductDTO.builder()
-                            .product(mapToProductDTO(entry.getKey()))
-                            .amount(entry.getValue())
-                            .build();
-                })
-                .collect(Collectors.toList());
+        Map<Integer, Integer> order_products = order.getProducts().entrySet().stream()
+                .collect(Collectors.toMap(
+                        entry -> entry.getKey().getId(), Map.Entry::getValue
+                ));
         return OrderDTO.builder()
                 .id(order.getId())
-                .client(mapToClientDTO(order.getClient()))
-                .products(orderProductDTOS)
+                .client_id(order.getClient().getId())
+                .order_products(order_products)
                 .date(order.getDate())
                 .build();
     }

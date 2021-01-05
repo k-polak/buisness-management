@@ -21,11 +21,6 @@ public class ProductsController {
     }
 
     public void createProduct(ProductDTO productDTO){
-        Product product = Product.builder()
-                .name(productDTO.getName())
-                .code(productDTO.getCode())
-                .quantity(productDTO.getQuantity())
-                .build();
-        dataManager.getProductDao().create(product);
+        dataManager.getProductDao().create(DtoMapper.mapToProduct(productDTO));
     }
 }

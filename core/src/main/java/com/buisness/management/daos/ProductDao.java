@@ -44,6 +44,21 @@ public class ProductDao {
         return products;
     }
 
+    public Product findById(int id) {
+        try (Connection connection = databaseAccess.getConnection();
+             PreparedStatement statement = connection.prepareStatement(DbQueries.SELECT_PRODUCT_BY_ID)) {
+
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return mapRowToProduct(resultSet);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public List<Product> findByIds(List<Integer> ids){
         List<Product> products = new LinkedList<>();
         try (Connection connection = databaseAccess.getConnection();
