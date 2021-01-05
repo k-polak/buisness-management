@@ -23,11 +23,11 @@ public class ClientDao {
         this.dataManager = dataManager;
     }
 
-    public void create(Client client, Integer addressId){
+    public void create(Client client){
         try (Connection connection = databaseAccess.getConnection();
              PreparedStatement statement = connection.prepareStatement(DbQueries.INSERT_CLIENT)) {
 
-            fillCreateStatement(statement, client, addressId);
+            fillCreateStatement(statement, client);
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -65,10 +65,10 @@ public class ClientDao {
     }
 
     private PreparedStatement fillCreateStatement(PreparedStatement preparedStatement,
-                                                  Client client, Integer addressId) throws SQLException {
+                                                  Client client) throws SQLException {
         preparedStatement.setString(1, client.getFirstName());
         preparedStatement.setString(2, client.getLastName());
-        preparedStatement.setInt(3, addressId);
+        preparedStatement.setInt(3, client.getAddress().getId());
         return preparedStatement;
     }
 

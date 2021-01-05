@@ -68,7 +68,7 @@ public class AddressDao {
 
     private Address mapRowToAddress(ResultSet resultSet) throws SQLException{
         return Address.builder()
-                .id(resultSet.getInt("number"))
+                .id(resultSet.getInt("id"))
                 .city(resultSet.getString("city"))
                 .number(resultSet.getInt("number"))
                 .postalCode(resultSet.getString("postal_code"))
