@@ -70,6 +70,7 @@ public class OrderDao {
         try(PreparedStatement statement = connection.prepareStatement(DbQueries.INSERT_ORDER_PRODUCT)) {
             statement.setInt(1, productId);
             statement.setInt(2, quantity);
+            statement.executeQuery();
         } catch (SQLException e) {
             e.printStackTrace();
         }
