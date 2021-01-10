@@ -29,7 +29,7 @@ public class OrderDao {
         this.dataManager = dataManager;
     }
     public void create(Integer clientId, Map<Integer, Integer> products){
-Chc        try (Connection connection = databaseAccess.getConnection()) {
+        try (Connection connection = databaseAccess.getConnection()) {
             // Set transaction mode
             connection.setAutoCommit(false);
             try(PreparedStatement statement = connection.prepareStatement(DbQueries.INSERT_ORDER)) {
