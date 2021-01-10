@@ -29,14 +29,36 @@ public class OrderDao {
         this.dataManager = dataManager;
     }
     public void create(Integer clientId, Map<Integer, Integer> products){
-        try (Connection connection = databaseAccess.getConnection();
-             PreparedStatement statement = connection.prepareStatement(DbQueries.INSERT_ORDER)) {
+Chc        try (Connection connection = databaseAccess.getConnection()) {
+            // Set transaction mode
+            connection.setAutoCommit(false);
+            try(PreparedStatement statement = connection.prepareStatement(DbQueries.INSERT_ORDER)) {
+                fillCreateStatement(statement, clientId);
+                statement.executeUpdate();
 
-            fillCreateStatement(statement, clientId);
-            statement.executeUpdate();
+                // Create OrderProducts from every product ordered
+                products.forEach((productId, quantity) -> {
+                    try {
+                        createOrderProduct(connection, productId, quantity);
+                    } catch (SQLException e) {
+                        if (e.getErrorCode() == 1690) {
+                            throw new RuntimeException("Not enough quantity");
+                        }
+                        e.printStackTrace();
+                    }
+                });
 
-            products.forEach((productId, quantity) -> createOrderProduct(connection,productId, quantity ));
-
+                // If no errors occurred commit transaction
+                connection.commit();
+            } catch (SQLException | RuntimeException e) {
+                // If any error occurred rollback
+                connection.rollback();
+                e.printStackTrace();
+            }
+            finally {
+                // Restore connection to auto commit transactions
+                connection.setAutoCommit(true);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -63,14 +85,11 @@ public class OrderDao {
         return preparedStatement;
     }
 
-    private void createOrderProduct(Connection connection, Integer productId, Integer quantity){
-        try(PreparedStatement statement = connection.prepareStatement(DbQueries.INSERT_ORDER_PRODUCT)) {
-            statement.setInt(1, productId);
-            statement.setInt(2, quantity);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    private void createOrderProduct(Connection connection, Integer productId, Integer quantity) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement(DbQueries.INSERT_ORDER_PRODUCT);
+        statement.setInt(1, productId);
+        statement.setInt(2, quantity);
+        statement.executeUpdate();
     }
 
     private Order mapRowToOrder(ResultSet resultSet) throws SQLException {
