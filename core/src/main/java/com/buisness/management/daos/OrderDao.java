@@ -29,36 +29,10 @@ public class OrderDao {
         this.dataManager = dataManager;
     }
     public void create(Integer clientId, Map<Integer, Integer> products){
-        try (Connection connection = databaseAccess.getConnection()) {
-            // Set transaction mode
+        try(Connection connection = databaseAccess.getConnection()) {
             connection.setAutoCommit(false);
-            try(PreparedStatement statement = connection.prepareStatement(DbQueries.INSERT_ORDER)) {
-                fillCreateStatement(statement, clientId);
-                statement.executeUpdate();
-
-                // Create OrderProducts from every product ordered
-                products.forEach((productId, quantity) -> {
-                    try {
-                        createOrderProduct(connection, productId, quantity);
-                    } catch (SQLException e) {
-                        if (e.getErrorCode() == 1690) {
-                            throw new RuntimeException("Not enough quantity");
-                        }
-                        e.printStackTrace();
-                    }
-                });
-
-                // If no errors occurred commit transaction
-                connection.commit();
-            } catch (SQLException | RuntimeException e) {
-                // If any error occurred rollback
-                connection.rollback();
-                e.printStackTrace();
-            }
-            finally {
-                // Restore connection to auto commit transactions
-                connection.setAutoCommit(true);
-            }
+            createOrderWithTransaction(connection, clientId, products);
+            connection.commit();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -92,6 +66,23 @@ public class OrderDao {
         statement.executeUpdate();
     }
 
+    private void createOrderWithTransaction(Connection connection, Integer clientId, Map<Integer, Integer> products) throws SQLException {
+        try(PreparedStatement statement = connection.prepareStatement(DbQueries.INSERT_ORDER)) {
+            fillCreateStatement(statement, clientId);
+            statement.executeUpdate();
+
+            for(Map.Entry<Integer, Integer> entry : products.entrySet()){
+                createOrderProduct(connection, entry.getKey(), entry.getValue());
+            }
+        } catch (SQLException e) {
+            if (e.getErrorCode() == 1690) {
+                throw new RuntimeException("Not enough quantity");
+            }
+            connection.rollback();
+            e.printStackTrace();
+        }
+    }
+
     private Order mapRowToOrder(ResultSet resultSet) throws SQLException {
         Integer clientId = resultSet.getInt("client_id");
         Integer orderId = resultSet.getInt("id");
@@ -112,6 +103,5 @@ public class OrderDao {
                 .build();
 
     }
-
 }
 
