@@ -81,6 +81,7 @@ public class ProductDao {
         preparedStatement.setString(1, product.getName());
         preparedStatement.setString(2, product.getCode());
         preparedStatement.setInt(3, product.getQuantity());
+        preparedStatement.setFloat(4, product.getPrice());
         return preparedStatement;
     }
 
@@ -97,6 +98,7 @@ public class ProductDao {
                 .name(resultSet.getString("name"))
                 .code(resultSet.getString("code"))
                 .quantity(resultSet.getInt("quantity"))
+                .price(resultSet.getFloat("price"))
                 .build();
     }
 

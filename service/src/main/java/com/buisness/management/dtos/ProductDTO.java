@@ -18,6 +18,7 @@ public class ProductDTO {
     String name;
     String code;
     Integer quantity;
+    Float price;
 
     @JsonPOJOBuilder(withPrefix = "")
     public static class ProductBuilder {

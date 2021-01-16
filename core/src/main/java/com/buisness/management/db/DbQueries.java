@@ -15,7 +15,7 @@ public class DbQueries {
     public static final String SELECT_CLIENTS = "select * from g21.clients;";
     public static final String SELECT_CLIENT_BY_ID = "select * from g21.clients where id = ?";
 
-    public static final String INSERT_PRODUCT = "insert into g21.products(name, code, quantity) values(?, ?, ?)";
+    public static final String INSERT_PRODUCT = "insert into g21.products(name, code, quantity, price) values(?, ?, ?, ?)";
     public static final String SELECT_PRODUCTS = "select * from g21.products;";
     public static final String SELECT_PRODUCT_BY_ID = "select * from g21.products where products.id = ?";
     public static final String SELECT_PRODUCTS_BY_IDS_IN = "select * from g21.products where products.id in";

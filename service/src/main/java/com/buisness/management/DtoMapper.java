@@ -59,6 +59,7 @@ public class DtoMapper {
                 .name(productDTO.getName())
                 .code(productDTO.getCode())
                 .quantity(productDTO.getQuantity())
+                .price(productDTO.getPrice())
                 .build();
     }
 
@@ -68,6 +69,7 @@ public class DtoMapper {
                 .name(product.getName())
                 .code(product.getCode())
                 .quantity(product.getQuantity())
+                .price(product.getPrice())
                 .build();
     }
 

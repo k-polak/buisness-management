@@ -11,4 +11,5 @@ public class Product {
     String name;
     String code;
     Integer quantity;
+    Float price;
 }
