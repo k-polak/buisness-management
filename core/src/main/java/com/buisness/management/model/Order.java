@@ -12,5 +12,6 @@ public class Order {
     Integer id;
     Client client;
     Map<Product, Integer> products;
+    Float sum;
     LocalDate date;
 }

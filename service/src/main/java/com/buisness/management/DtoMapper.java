@@ -88,6 +88,7 @@ public class DtoMapper {
                 .id(order.getId())
                 .client(mapToClientDTO(order.getClient()))
                 .products(orderProductDTOS)
+                .sum(order.getSum())
                 .date(order.getDate())
                 .build();
     }

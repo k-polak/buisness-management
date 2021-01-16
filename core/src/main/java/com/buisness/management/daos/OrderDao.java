@@ -95,10 +95,15 @@ public class OrderDao {
                 .stream()
                 .collect(Collectors.toMap(Function.identity(), product -> productsIdsMap.get(product.getId())));
 
+        Float sum = (float) productsWithQuantities.entrySet().stream()
+                .mapToDouble(entry -> entry.getKey().getPrice() * entry.getValue())
+                .sum();
+
         return Order.builder()
                 .id(orderId)
                 .client(client)
                 .products(productsWithQuantities)
+                .sum(sum)
                 .date(resultSet.getDate("date").toLocalDate())
                 .build();
 

@@ -24,6 +24,7 @@ public class OrderDTO {
     Integer id;
     ClientDTO client;
     List<OrderProductDTO> products;
+    Float sum;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @JsonSerialize(using = LocalDateSerializer.class)
     LocalDate date;
