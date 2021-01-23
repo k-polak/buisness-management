@@ -32,7 +32,7 @@ export default class Customers extends Component {
         {
 
           this.state.customerList.data.map(customer =>
-          <Card key={customer.id} className="centeralign">
+          <Card key={customer.id} className="center-align">
             <Card.Header>
               <Card.Title>{customer.firstName}</Card.Title>
             </Card.Header>

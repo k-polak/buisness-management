@@ -35,7 +35,7 @@ export default class CustomerDetails extends Component {
     if (!this.state.customerDetails)
       return (<p>Loading Data</p>)
     return (<div className="customerdetails">
-      <Card className="centeralign">
+      <Card className="center-align">
         <Card.Header>
           <Card.Title componentClass="h3">{this.state.customerDetails.data.name}</Card.Title>
         </Card.Header>

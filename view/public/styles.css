@@ -1,11 +1,9 @@
-.addmargin {
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-
-.centeralign {
+.center-align {
   display: block;
   margin-left: auto;
   margin-right: auto;
+}
 
+.product-image {
+  height: 100px;
 }
