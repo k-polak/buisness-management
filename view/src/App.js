@@ -7,6 +7,7 @@ import Products from './Products';
 import { BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom';
 import register from './registerServiceWorker';
 import {Navbar, Nav, Form, FormControl, Button} from "react-bootstrap";
+import AddProduct from "./AddProduct";
 
 register();
 
@@ -23,8 +24,9 @@ class App extends Component {
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
               <Nav className="mr-auto">
-                <Nav.Link href="/view/">Home</Nav.Link>
-                <Nav.Link href="#features">Products</Nav.Link>
+                <Nav.Link href="/view">Home</Nav.Link>
+                <Nav.Link href="/view/productlist">Products</Nav.Link>
+                <Nav.Link href="/view/addproduct">Add product</Nav.Link>
                 <Nav.Link href="#pricing">Clients</Nav.Link>
               </Nav>
               <Form inline>
@@ -38,6 +40,7 @@ class App extends Component {
               <Route exact path= "/" component={Home} />
               <Route exact path='/customerlist' component={Customers} />
               <Route exact path='/productlist' component={Products} />
+              <Route exact path='/addproduct' component={AddProduct} />
             </Switch>
           </main>
         </div>

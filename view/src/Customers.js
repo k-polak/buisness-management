@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import {Card, Button} from 'react-bootstrap'
-import CustomerDetails from './CustomerDetails'
 import axios from 'axios'
+import {ListGroup} from 'react-bootstrap';
 
 export default class Customers extends Component {
 
@@ -22,37 +21,22 @@ export default class Customers extends Component {
     axios.get('/service-1.0-SNAPSHOT/clients').then(response => {
       this.setState({customerList: response})
     })
-  };
+  }
 
   render() {
     if (!this.state.customerList)
       return (<p>Loading data</p>)
-    return (<div className="addmargin">
-      <div className="col-md-3">
+    return (
+      <div className="col-md-10">
         {
-
           this.state.customerList.data.map(customer =>
-          <Card key={customer.id} className="center-align">
-            <Card.Header>
-              <Card.Title>{customer.firstName}</Card.Title>
-            </Card.Header>
-            <Card.Body>
-              <p>{customer.lastName}</p>
-              <p>{customer.city}</p>
-              <Button bsStyle="info" onClick={() => this.setState({selectedCustomer: customer.id})}>
-
-                Click to View Details
-
-              </Button>
-
-            </Card.Body>
-          </Card>)
+            <ListGroup horizontal>
+              <ListGroup.Item>{customer.lastName}</ListGroup.Item>
+              <ListGroup.Item>{customer.city}</ListGroup.Item>
+            </ListGroup>
+          )
         }
       </div>
-      <div className="col-md-6">
-
-      </div>
-    </div>)
+      )
   }
-
 }

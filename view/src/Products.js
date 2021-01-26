@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Card, Button, Col, Row, Container, FormControl, Form, Navbar, InputGroup, FormLabel} from 'react-bootstrap';
+import {Card, Button, Col, Row, Container, FormControl, Form, Navbar} from 'react-bootstrap';
 import axios from 'axios';
 import no_image from './no_image.svg';
 
@@ -39,7 +39,7 @@ export default class Products extends Component {
     axios.get('/service-1.0-SNAPSHOT/products').then(response => {
       this.setState({productList: response})
     })
-  };
+  }
 
   render() {
     // If could not load products

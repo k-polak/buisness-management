@@ -9,7 +9,7 @@ export default class Home extends Component {
 
     //function which is called the first time the component loads
     componentDidMount() {
-        this.getProductData();
+        //this.getProductData();
     }
 
     render() {
