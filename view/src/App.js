@@ -29,13 +29,9 @@ class App extends Component {
                 <Nav.Link href="/view/addproduct">Add product</Nav.Link>
                 <Nav.Link href="#pricing">Clients</Nav.Link>
               </Nav>
-              <Form inline>
-                <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-                <Button variant="outline-primary">Search</Button>
-              </Form>
             </Navbar.Collapse>
           </Navbar>
-          <main className="App-main">
+          <main className="App-main min-vh-100">
             <Switch>
               <Route exact path= "/" component={Home} />
               <Route exact path='/customerlist' component={Customers} />

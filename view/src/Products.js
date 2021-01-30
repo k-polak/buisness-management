@@ -56,7 +56,7 @@ export default class Products extends Component {
     );
 
     return (
-    <Container fluid className="pt-5">
+    <Container fluid className="pt-5 ">
       <Navbar variant="dark" expand="md" className="mb-5">
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">

@@ -16,5 +16,13 @@
 
 .App-main {
   background-color: #222;
-  margin-top: 100px;
+  padding-top: 15vh;
+}
+
+.heading-wrapper {
+  max-height: 85vh;
+}
+
+.heading {
+  border-radius: 5px;
 }
