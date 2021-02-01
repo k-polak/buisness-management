@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import axios from "axios";
-import {Button, Container, Table} from "react-bootstrap";
+import {Button, Col, Container, Row, Table} from "react-bootstrap";
 
 export default class Cart extends Component {
     constructor(props) {
@@ -47,34 +47,38 @@ export default class Cart extends Component {
 
         return (
             <Container fluid>
-                <Table striped bordered hover variant="dark">
-                    <thead>
-                        <th>Name</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
-                        <th></th>
-                    </thead>
-                    <tbody>
-                        {filteredProducts.map(product =>
-                            <tr>
-                                <td>{product.name}</td>
-                                <td>{product.price} PLN</td>
-                                <td>{this.state.cart[product.id]}</td>
-                                <td>
-                                    <Button variant="outline-danger" onClick={() => this.removeFromCart(product.id)}>
-                                        Remove
-                                    </Button>
-                                </td>
-                            </tr>
-                        )}
-                        <tr>
-                            <td>Sum:</td>
-                            <td> {sum.toFixed(2)} PLN</td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    </tbody>
-                </Table>
+                <Row className="justify-content-md-center">
+                    <Col lg={8}>
+                        <Table striped bordered hover variant="dark">
+                            <thead>
+                                <th>Name</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th></th>
+                            </thead>
+                            <tbody>
+                                {filteredProducts.map(product =>
+                                    <tr>
+                                        <td>{product.name}</td>
+                                        <td>{product.price} PLN</td>
+                                        <td>{this.state.cart[product.id]}</td>
+                                        <td>
+                                            <Button variant="outline-danger" onClick={() => this.removeFromCart(product.id)}>
+                                                Remove
+                                            </Button>
+                                        </td>
+                                    </tr>
+                                )}
+                                <tr>
+                                    <td>Sum:</td>
+                                    <td> {sum.toFixed(2)} PLN</td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </Table>
+                    </Col>
+                </Row>
                 <Button variant="outline-primary" className="mt-5">Buy</Button>
             </Container>
         )
