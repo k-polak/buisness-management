@@ -4,10 +4,11 @@ import './App.css';
 import Home from './Home';
 import Customers from './Customers';
 import Products from './Products';
-import { BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import register from './registerServiceWorker';
-import {Navbar, Nav, Form, FormControl, Button} from "react-bootstrap";
+import {Navbar, Nav} from "react-bootstrap";
 import AddProduct from "./AddProduct";
+import Cart from "./Cart";
 
 register();
 
@@ -27,7 +28,7 @@ class App extends Component {
                 <Nav.Link href="/view">Home</Nav.Link>
                 <Nav.Link href="/view/productlist">Products</Nav.Link>
                 <Nav.Link href="/view/addproduct">Add product</Nav.Link>
-                <Nav.Link href="#pricing">Clients</Nav.Link>
+                <Nav.Link href="/view/cart">Cart</Nav.Link>
               </Nav>
             </Navbar.Collapse>
           </Navbar>
@@ -37,6 +38,7 @@ class App extends Component {
               <Route exact path='/customerlist' component={Customers} />
               <Route exact path='/productlist' component={Products} />
               <Route exact path='/addproduct' component={AddProduct} />
+              <Route exact path='/cart' component={Cart} />
             </Switch>
           </main>
         </div>

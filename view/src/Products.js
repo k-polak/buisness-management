@@ -11,7 +11,8 @@ export default class Products extends Component {
       selectedProduct: 1,
       search: "",
       priceLow: null,
-      priceHigh: null
+      priceHigh: null,
+      cart: JSON.parse(localStorage.getItem("cart")) ? JSON.parse(localStorage.getItem("cart")) : {}
     }
   }
 
@@ -39,6 +40,13 @@ export default class Products extends Component {
     axios.get('/service-1.0-SNAPSHOT/products').then(response => {
       this.setState({productList: response})
     })
+  }
+
+  addToCart(id, quantity) {
+    let cartCopy = this.state.cart;
+    cartCopy[id] = quantity;
+    this.setState({cart: cartCopy});
+    localStorage.setItem("cart", JSON.stringify(this.state.cart));
   }
 
   render() {
@@ -78,10 +86,10 @@ export default class Products extends Component {
                   <Card.Title>{product.name}</Card.Title>
                 </Card.Body>
                 <Card.Footer>
-                  <Card.Title>Cena: {product.price} zł</Card.Title>
-                  <p>Dostępna ilość: {product.quantity}</p>
-                  <Button variant="outline-primary" onClick={() => this.setState({selectedProduct: product.id})}>
-                    Dodaj do koszyka
+                  <Card.Title>Price: {product.price} PLN</Card.Title>
+                  <p>Available amount: {product.quantity}</p>
+                  <Button variant="outline-primary" onClick={() => this.addToCart(product.id, 1)}>
+                    Add to cart
                   </Button>
                 </Card.Footer>
               </Card>
