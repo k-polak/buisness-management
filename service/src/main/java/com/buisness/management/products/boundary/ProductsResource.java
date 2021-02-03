@@ -19,6 +19,13 @@ public class ProductsResource {
         return productsController.getAllProducts();
     }
 
+    @GET
+    @Path("find")
+    @Produces({MediaType.APPLICATION_JSON})
+    public ProductDTO getProductById(@QueryParam("id") int id) {
+        return productsController.getProductById(id);
+    }
+
     @POST
     @Path("create")
     @Consumes({MediaType.APPLICATION_JSON})

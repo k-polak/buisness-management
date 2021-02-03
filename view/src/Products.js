@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Card, Button, Col, Row, Container, FormControl, Form, Navbar} from 'react-bootstrap';
 import axios from 'axios';
 import no_image from './no_image.svg';
+import Cart from "./Cart";
 
 export default class Products extends Component {
 
@@ -11,8 +12,8 @@ export default class Products extends Component {
       selectedProduct: 1,
       search: "",
       priceLow: null,
-      priceHigh: null,
-      cart: JSON.parse(localStorage.getItem("cart")) ? JSON.parse(localStorage.getItem("cart")) : {}
+      priceHigh: null
+      // cart: JSON.parse(localStorage.getItem("cart")) ? JSON.parse(localStorage.getItem("cart")) : {}
     }
   }
 
@@ -40,13 +41,6 @@ export default class Products extends Component {
     axios.get('/service-1.0-SNAPSHOT/products').then(response => {
       this.setState({productList: response})
     })
-  }
-
-  addToCart(id, quantity) {
-    let cartCopy = this.state.cart;
-    cartCopy[id] = quantity;
-    this.setState({cart: cartCopy});
-    localStorage.setItem("cart", JSON.stringify(this.state.cart));
   }
 
   render() {
@@ -80,19 +74,21 @@ export default class Products extends Component {
       <Row xs={1} sm={2} md={3} lg={4}>
         {filteredProducts.map(product =>
             <Col className="mb-5">
-              <Card key={product.id} bg="dark" text="light" className="h-100">
-                <Card.Img variant="top" src={no_image} className="product-image my-3" />
-                <Card.Body>
-                  <Card.Title>{product.name}</Card.Title>
-                </Card.Body>
-                <Card.Footer>
-                  <Card.Title>Price: {product.price} PLN</Card.Title>
-                  <p>Available amount: {product.quantity}</p>
-                  <Button variant="outline-primary" onClick={() => this.addToCart(product.id, 1)}>
-                    Add to cart
-                  </Button>
-                </Card.Footer>
-              </Card>
+              <a href={`/view/product/${product.id}`} className="product-link">
+                <Card key={product.id} bg="dark" text="light" className="h-100 product-card">
+                  <Card.Img variant="top" src={no_image} className="product-thumbnail my-3" />
+                  <Card.Body>
+                    <Card.Title>{product.name}</Card.Title>
+                  </Card.Body>
+                  <Card.Footer>
+                    <Card.Title>Price: {product.price} PLN</Card.Title>
+                    <p>Available amount: {product.quantity}</p>
+                    {/*<Button variant="outline-primary" onClick={() => Cart.addToCart(product.id, 1)}>*/}
+                    {/*  Add to cart*/}
+                    {/*</Button>*/}
+                  </Card.Footer>
+                </Card>
+              </a>
             </Col>)
         }
       </Row>

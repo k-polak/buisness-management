@@ -22,6 +22,13 @@ export default class Cart extends Component {
         })
     }
 
+    static addToCart(id, quantity) {
+        // TODO add confirmation dialog
+        let cartCopy = JSON.parse(localStorage.getItem("cart"));
+        cartCopy[parseInt(id)] = parseInt(quantity);
+        localStorage.setItem("cart", JSON.stringify(cartCopy));
+    }
+
     removeFromCart(id) {
         let cartCopy = this.state.cart;
         delete cartCopy[id];
@@ -34,6 +41,7 @@ export default class Cart extends Component {
         if (!this.state.productList)
             return (<p>Loading data</p>)
 
+        // TODO create get products by ids endpoint
         // Filter products
         let filteredProducts = this.state.productList.data.filter(
             product => {

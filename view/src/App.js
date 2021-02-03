@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import logo from './logo_light.svg';
+import cart_icon from './cart_light.svg';
 import './App.css';
 import Home from './Home';
 import Customers from './Customers';
@@ -9,6 +10,7 @@ import register from './registerServiceWorker';
 import {Navbar, Nav} from "react-bootstrap";
 import AddProduct from "./AddProduct";
 import Cart from "./Cart";
+import Product from "./Product";
 
 register();
 
@@ -28,7 +30,11 @@ class App extends Component {
                 <Nav.Link href="/view">Home</Nav.Link>
                 <Nav.Link href="/view/productlist">Products</Nav.Link>
                 <Nav.Link href="/view/addproduct">Add product</Nav.Link>
-                <Nav.Link href="/view/cart">Cart</Nav.Link>
+              </Nav>
+              <Nav className="ml-auto">
+                <Nav.Link href="/view/cart">
+                  <img src={cart_icon} width="32" height="32" className="cart-icon"/>
+                </Nav.Link>
               </Nav>
             </Navbar.Collapse>
           </Navbar>
@@ -37,6 +43,7 @@ class App extends Component {
               <Route exact path= "/" component={Home} />
               <Route exact path='/customerlist' component={Customers} />
               <Route exact path='/productlist' component={Products} />
+              <Route exect path='/product/:id' component={Product} />
               <Route exact path='/addproduct' component={AddProduct} />
               <Route exact path='/cart' component={Cart} />
             </Switch>

@@ -26,3 +26,25 @@
 .heading {
   border-radius: 5px;
 }
+
+.product-card:hover {
+  transform: scale(1.1);
+  transition: all 0.2s ease-in-out;
+}
+
+.product-link {
+  text-decoration: none !important;
+}
+
+.product-image {
+  max-height: 100%;
+  max-width: 100%;
+}
+
+.cart-icon {
+  opacity: 0.5;
+}
+
+.cart-icon:hover {
+  opacity: 0.75;
+}

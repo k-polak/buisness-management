@@ -20,6 +20,10 @@ public class ProductsController {
                 .collect(Collectors.toList());
     }
 
+    public ProductDTO getProductById(int id) {
+        return DtoMapper.mapToProductDTO(dataManager.getProductDao().findById(id));
+    }
+
     public void createProduct(ProductDTO productDTO){
         dataManager.getProductDao().create(DtoMapper.mapToProduct(productDTO));
     }
