@@ -6,6 +6,7 @@ export default class Cart extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            clientId: 2,
             cart: JSON.parse(localStorage.getItem("cart")) ? JSON.parse(localStorage.getItem("cart")) : {}
         }
     }
@@ -25,6 +26,7 @@ export default class Cart extends Component {
     static addToCart(id, quantity) {
         // TODO add confirmation dialog
         let cartCopy = JSON.parse(localStorage.getItem("cart")) ? JSON.parse(localStorage.getItem("cart")) : {}
+        Object.assign(cartCopy, {id: "value3"});
         cartCopy[parseInt(id)] = parseInt(quantity);
         localStorage.setItem("cart", JSON.stringify(cartCopy));
     }
@@ -34,6 +36,18 @@ export default class Cart extends Component {
         delete cartCopy[id];
         this.setState({cart: cartCopy});
         localStorage.setItem("cart", JSON.stringify(this.state.cart));
+    }
+
+    placeOrder(){
+        let createOrder = {
+            clientId: 2,
+            productAmountMap: JSON.parse(localStorage.getItem("cart"))
+        }
+        axios.post('/service-1.0-SNAPSHOT/orders/create',JSON.stringify(createOrder),  {
+            headers: {
+                'Content-Type': 'application/json',
+            }})
+            .then(response => console.log(response))
     }
 
     render() {
@@ -87,7 +101,7 @@ export default class Cart extends Component {
                         </Table>
                     </Col>
                 </Row>
-                <Button variant="outline-primary" className="mt-5">Buy</Button>
+                <Button variant="outline-primary" className="mt-5" onClick={this.placeOrder}>Buy</Button>
             </Container>
         )
     }
