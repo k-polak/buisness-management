@@ -24,7 +24,7 @@ export default class Cart extends Component {
 
     static addToCart(id, quantity) {
         // TODO add confirmation dialog
-        let cartCopy = JSON.parse(localStorage.getItem("cart"));
+        let cartCopy = JSON.parse(localStorage.getItem("cart")) ? JSON.parse(localStorage.getItem("cart")) : {}
         cartCopy[parseInt(id)] = parseInt(quantity);
         localStorage.setItem("cart", JSON.stringify(cartCopy));
     }
